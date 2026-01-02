@@ -3,17 +3,18 @@
 Objectif du site :
 Décrypter les effets systémiques invisibles du numérique, de l’IA et des décisions organisationnelles en santé.
 
-Pages prévues :
-- Accueil
-- Manifeste / Intention
-- Blog
-- Méthode d’analyse
-- Laboratoire IA
-- À propos
-- Contact
-- Mentions légales
-- Politique de confidentialité
+Menu Principal :
+Accueil
+Blog
+Laboratoire IA
+Cadre d’analyse
+Manifeste
+À propos
 
+Menu footer :
+Contact
+Mentions légales
+Politique de confidentialité
 
 Règles éditoriales :
 - Pas de jargon techno gratuit
