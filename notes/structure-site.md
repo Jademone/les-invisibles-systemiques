@@ -6,10 +6,15 @@ Décrypter les effets systémiques invisibles du numérique, de l’IA et des d�
 Pages prévues :
 - Accueil
 - Manifeste / Intention
+- Blog
 - Articles
 - Méthode d’analyse
+- Laboratoire IA
 - À propos
 - Contact
+- Mentions légales
+- Politique de confidentialité
+
 
 Règles éditoriales :
 - Pas de jargon techno gratuit
