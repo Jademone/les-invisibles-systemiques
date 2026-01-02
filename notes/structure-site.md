@@ -7,7 +7,6 @@ Pages prévues :
 - Accueil
 - Manifeste / Intention
 - Blog
-- Articles
 - Méthode d’analyse
 - Laboratoire IA
 - À propos
