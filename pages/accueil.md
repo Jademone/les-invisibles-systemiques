@@ -1,4 +1,8 @@
 # Les Invisibles Systémiques
+## Rendre visibles les effets systémiques du numérique et de l’IA dans nos organisations, au-delà des discours.
+
+Ce site analyse ce que les décisions technologiques produisent réellement :
+sur le travail, les organisations, les équilibres humains et éthiques.
 
 ## Ce que ce site fait
 Les Invisibles Systémiques analyse ce que les discours sur le numérique et l’IA ne montrent pas :
