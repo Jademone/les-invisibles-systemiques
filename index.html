@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Invisibles Systémiques — Geneviève Momus</title>
+  <meta name="description" content="Analyses systémiques des organisations de santé et du monde du travail. Par Geneviève Momus, cadre de santé et fondatrice d'AECOSS.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --papier: #F7F5F0;
+      --papier-2: #EDE9E1;
+      --noir: #1C1A16;
+      --noir-2: #2A2720;
+      --ambre: #C17F3A;
+      --ambre-pale: #E8D5B5;
+      --ambre-dark: #8A5820;
+      --muted: #7A6A5A;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--papier);
+      color: var(--noir);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* CURSEUR */
+    .cursor {
+      width: 32px; height: 32px;
+      border: 2px solid var(--noir);
+      border-radius: 50%;
+      position: fixed; pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.12s ease-out, background 0.2s, border-color 0.2s;
+      mix-blend-mode: multiply;
+    }
+    @media (hover: none) { .cursor { display: none; } }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: stretch;
+      border-bottom: 3px solid var(--noir);
+      background: var(--papier);
+      height: 60px;
+    }
+    .nav-logo-box {
+      border-right: 3px solid var(--noir);
+      padding: 0 24px;
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 32px; height: 32px; flex-shrink: 0;
+    }
+    .nav-logo-text { font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--noir); line-height: 1.2; }
+    .nav-logo-text span { display: block; font-size: 9px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ambre); font-family: var(--sans); }
+    .nav-links {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 0; list-style: none; padding: 0 16px;
+    }
+    .nav-links li a {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; padding: 0 16px; height: 60px;
+      display: flex; align-items: center;
+      transition: color 0.2s, background 0.2s;
+      border-left: 1px solid rgba(28,26,22,0.1);
+    }
+    .nav-links li a:hover { color: var(--noir); background: var(--papier-2); }
+    .nav-aecoss {
+      border-left: 3px solid var(--noir);
+      padding: 0 20px;
+      display: flex; align-items: center;
+    }
+    .nav-aecoss a {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--noir);
+      text-decoration: none;
+    }
+    .nav-aecoss a:hover { color: var(--ambre); }
+
+    /* HERO */
+    .hero {
+      padding-top: 60px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      border-bottom: 3px solid var(--noir);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(28,26,22,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28,26,22,0.06) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    .hero-left {
+      grid-column: 1 / 8;
+      padding: 60px 40px 80px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; z-index: 2;
+      border-right: 3px solid var(--noir);
+    }
+    .hero-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ambre);
+      background: var(--noir); padding: 8px 14px;
+      display: inline-block; align-self: flex-start;
+      opacity: 0; animation: fadeIn 0.5s ease 0.1s forwards;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(64px, 10vw, 140px);
+      font-weight: 900; line-height: 0.88;
+      letter-spacing: -0.04em;
+      color: var(--noir);
+      opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards;
+    }
+    .hero-title .accent {
+      font-style: italic; color: var(--ambre);
+    }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--noir);
+      color: transparent;
+    }
+    .hero-bottom {
+      opacity: 0; animation: fadeIn 0.6s ease 0.4s forwards;
+    }
+    .hero-desc {
+      font-size: 16px; font-weight: 300; line-height: 1.8;
+      color: var(--muted); max-width: 420px;
+      border-left: 4px solid var(--ambre); padding-left: 20px;
+      margin-bottom: 32px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--papier);
+      background: var(--noir); text-decoration: none;
+      padding: 18px 32px;
+      border: 3px solid var(--noir);
+      transition: background 0.2s, color 0.2s, gap 0.2s;
+    }
+    .hero-cta:hover { background: var(--ambre); border-color: var(--ambre); gap: 20px; }
+
+    .hero-right {
+      grid-column: 8 / 13;
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+    }
+    .hero-right-top {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px;
+      border-bottom: 3px solid var(--noir);
+    }
+    .hero-reticule {
+      width: min(220px, 80%); height: min(220px, 80%);
+      opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards;
+    }
+    .hero-stat {
+      padding: 28px 32px;
+      border-bottom: 3px solid var(--noir);
+    }
+    .hero-stat-num {
+      font-family: var(--serif);
+      font-size: 48px; font-weight: 900; line-height: 1;
+      color: var(--noir); margin-bottom: 6px;
+    }
+    .hero-stat-label {
+      font-size: 11px; font-weight: 400; color: var(--muted); line-height: 1.5;
+    }
+
+    /* MARQUEE */
+    .marquee-strip {
+      background: var(--noir); overflow: hidden;
+      padding: 16px 0; border-bottom: 3px solid var(--noir);
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: var(--sans);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--papier); padding: 0 32px;
+    }
+    .marquee-item span { color: var(--ambre); margin-right: 32px; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ARTICLES */
+    .articles-section {
+      border-bottom: 3px solid var(--noir);
+    }
+    .articles-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 32px 40px;
+      border-bottom: 3px solid var(--noir);
+    }
+    .section-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ambre); margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: 32px; font-weight: 700; color: var(--noir);
+    }
+    .all-link {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--noir);
+      text-decoration: none;
+      border-bottom: 2px solid var(--ambre); padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .all-link:hover { color: var(--ambre); }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .article-card {
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 40px;
+      text-decoration: none;
+      border-bottom: 3px solid var(--noir);
+      border-right: 3px solid var(--noir);
+      transition: background 0.2s;
+      min-height: 280px;
+    }
+    .article-card:nth-child(even) { border-right: none; }
+    .article-card.featured {
+      grid-column: 1 / 3;
+      background: var(--noir);
+      color: var(--papier);
+      min-height: 320px;
+      flex-direction: row; align-items: flex-end; gap: 60px;
+      border-right: none;
+    }
+    .article-card.featured:hover { background: var(--noir-2); }
+    .article-card:not(.featured):hover { background: var(--papier-2); }
+
+    .card-num {
+      font-family: var(--serif);
+      font-size: 80px; font-weight: 900; line-height: 1;
+      color: rgba(193,127,58,0.25); margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .featured .card-num { color: rgba(193,127,58,0.35); }
+    .card-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ambre); margin-bottom: 12px;
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: clamp(18px, 2.2vw, 28px);
+      font-weight: 700; line-height: 1.2; color: var(--papier);
+      margin-bottom: 12px;
+    }
+    .article-card:not(.featured) .card-title { color: var(--noir); }
+    .card-excerpt {
+      font-size: 14px; font-weight: 300; line-height: 1.7;
+      color: rgba(240,237,228,0.65); margin-bottom: 20px;
+    }
+    .article-card:not(.featured) .card-excerpt { color: var(--muted); }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ambre);
+    }
+    .article-card:not(.featured) .card-footer { color: var(--muted); }
+    .card-arrow { font-size: 20px; transition: transform 0.2s; }
+    .article-card:hover .card-arrow { transform: translateX(6px); }
+
+    .featured-content { flex: 1; }
+
+    /* THÈMES */
+    .themes {
+      background: var(--ambre);
+      border-bottom: 3px solid var(--noir);
+    }
+    .themes-list { list-style: none; }
+    .theme-item {
+      display: flex; align-items: baseline; gap: 24px;
+      padding: 28px 40px;
+      border-bottom: 3px solid rgba(28,26,22,0.25);
+      transition: padding-left 0.3s, background 0.2s;
+      cursor: default;
+    }
+    .theme-item:last-child { border-bottom: none; }
+    .theme-item:hover { padding-left: 64px; background: var(--ambre-dark); }
+    .theme-main {
+      font-family: var(--sans);
+      font-size: clamp(28px, 5vw, 64px);
+      font-weight: 700; letter-spacing: -0.02em;
+      text-transform: uppercase; color: var(--papier);
+      line-height: 1;
+    }
+    .theme-sub {
+      font-family: var(--serif);
+      font-size: clamp(14px, 2vw, 22px);
+      font-style: italic; color: rgba(247,245,240,0.55);
+    }
+
+    /* À PROPOS */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 3px solid var(--noir);
+    }
+    .about-left {
+      padding: 80px 40px;
+      border-right: 3px solid var(--noir);
+    }
+    .about-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 900; line-height: 1.05;
+      color: var(--noir); margin-bottom: 28px;
+    }
+    .about-title em { font-style: italic; color: var(--ambre); }
+    .about-body {
+      font-size: 16px; font-weight: 300; line-height: 1.85;
+      color: var(--muted); margin-bottom: 36px;
+    }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--papier);
+      background: var(--noir); text-decoration: none;
+      padding: 16px 28px; border: 3px solid var(--noir);
+      transition: background 0.2s, color 0.2s;
+    }
+    .about-link:hover { background: var(--ambre); border-color: var(--ambre); }
+    .about-right {
+      background: var(--noir-2);
+      padding: 80px 40px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .about-card-name {
+      font-family: var(--serif);
+      font-size: 28px; font-weight: 700;
+      color: var(--papier); margin-bottom: 4px;
+    }
+    .about-card-role {
+      font-size: 11px; font-weight: 400; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ambre); margin-bottom: 40px;
+    }
+    .about-tags { display: flex; flex-direction: column; gap: 12px; }
+    .about-tag {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; font-weight: 300; color: rgba(247,245,240,0.7);
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(247,245,240,0.1);
+    }
+    .about-tag:last-child { border-bottom: none; }
+    .about-tag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--ambre); flex-shrink: 0;
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 3px solid var(--noir);
+    }
+    .newsletter-left {
+      padding: 60px 40px;
+      border-right: 3px solid var(--noir);
+    }
+    .newsletter-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ambre); margin-bottom: 16px;
+    }
+    .newsletter-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900; line-height: 1.05;
+      color: var(--noir); margin-bottom: 12px;
+    }
+    .newsletter-sub {
+      font-size: 14px; font-weight: 300; line-height: 1.7;
+      color: var(--muted);
+    }
+    .newsletter-right {
+      padding: 60px 40px;
+      display: flex; flex-direction: column; justify-content: center; gap: 12px;
+    }
+    .newsletter-form { display: flex; flex-direction: column; gap: 12px; }
+    .newsletter-input {
+      font-family: var(--sans); font-size: 14px;
+      padding: 16px 20px;
+      border: 3px solid var(--noir);
+      background: var(--papier);
+      color: var(--noir); outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input::placeholder { color: var(--muted); }
+    .newsletter-input:focus { border-color: var(--ambre); }
+    .newsletter-btn {
+      font-family: var(--sans); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 18px; background: var(--noir); color: var(--papier);
+      border: 3px solid var(--noir); cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .newsletter-btn:hover { background: var(--ambre); border-color: var(--ambre); }
+
+    /* FOOTER */
+    footer {
+      background: var(--noir);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 3px solid var(--noir);
+    }
+    .footer-brand {
+      padding: 48px 32px;
+      border-right: 1px solid rgba(247,245,240,0.1);
+      grid-column: span 1;
+    }
+    .footer-logo {
+      font-family: var(--serif); font-size: 14px; font-weight: 700;
+      color: var(--papier); margin-bottom: 16px; display: block;
+    }
+    .footer-logo span { color: var(--ambre); font-style: italic; }
+    .footer-tagline {
+      font-size: 12px; font-weight: 300; line-height: 1.7;
+      color: rgba(247,245,240,0.4);
+    }
+    .footer-col {
+      padding: 48px 32px;
+      border-right: 1px solid rgba(247,245,240,0.1);
+    }
+    .footer-col:last-child { border-right: none; }
+    .footer-col-title {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ambre); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: 13px; font-weight: 300;
+      color: rgba(247,245,240,0.6); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--papier); }
+    .footer-bottom {
+      grid-column: 1 / 5;
+      border-top: 1px solid rgba(247,245,240,0.1);
+      padding: 20px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-size: 10px; letter-spacing: 0.1em;
+      color: rgba(247,245,240,0.25);
+    }
+    .footer-bottom-links {
+      display: flex; gap: 24px; list-style: none;
+    }
+    .footer-bottom-links a {
+      font-size: 10px; letter-spacing: 0.1em;
+      color: rgba(247,245,240,0.25); text-decoration: none;
+    }
+    .footer-bottom-links a:hover { color: rgba(247,245,240,0.5); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-left { grid-column: 1 / 9; }
+      .hero-right { grid-column: 9 / 13; }
+      .hero-stat-num { font-size: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { grid-template-columns: 1fr auto; }
+      .nav-aecoss { display: none; }
+      .nav-links { gap: 0; }
+      .nav-links li a { padding: 0 10px; font-size: 9px; }
+
+      .hero {
+        display: flex; flex-direction: column;
+        min-height: auto;
+      }
+      .hero-left { padding: 40px 24px 48px; border-right: none; border-bottom: 3px solid var(--noir); }
+      .hero-right { flex-direction: row; border-top: none; }
+      .hero-right-top { flex: 1; border-right: 3px solid var(--noir); border-bottom: none; padding: 24px; }
+      .hero-reticule { width: 120px; height: 120px; }
+      .hero-stat { flex: 1; padding: 20px; border-bottom: none; }
+      .hero-stat-num { font-size: 32px; }
+
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; }
+      .article-card.featured { grid-column: 1; flex-direction: column; gap: 20px; min-height: auto; }
+      .article-card:nth-child(even) { border-right: none; }
+      .card-num { font-size: 56px; margin-bottom: 8px; }
+
+      .articles-header { padding: 24px; }
+
+      .themes .theme-item { padding: 20px 24px; }
+      .themes .theme-item:hover { padding-left: 40px; }
+
+      .about { grid-template-columns: 1fr; }
+      .about-left { border-right: none; border-bottom: 3px solid var(--noir); padding: 48px 24px; }
+      .about-right { padding: 48px 24px; }
+
+      .newsletter { grid-template-columns: 1fr; }
+      .newsletter-left { border-right: none; border-bottom: 3px solid var(--noir); padding: 48px 24px; }
+      .newsletter-right { padding: 40px 24px; }
+
+      footer { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / 3; border-right: none; border-bottom: 1px solid rgba(247,245,240,0.1); }
+      .footer-col { border-right: none; border-bottom: 1px solid rgba(247,245,240,0.1); }
+      .footer-col:nth-child(odd) { border-right: 1px solid rgba(247,245,240,0.1); }
+      .footer-bottom { grid-column: 1 / 3; flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links li:not(:last-child) a { display: none; }
+      .hero-title { font-size: 56px; }
+      .hero-right { flex-direction: column; }
+      .hero-right-top { border-right: none; border-bottom: 3px solid var(--noir); }
+      footer { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: 1; }
+      .footer-bottom { grid-column: 1; }
+      .footer-col:nth-child(odd) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="/" class="nav-logo-box">
+    <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" stroke="#1C1A16" stroke-width="2"/>
+      <circle cx="16" cy="16" r="7" stroke="#1C1A16" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="2" fill="#C17F3A"/>
+      <line x1="2" y1="16" x2="30" y2="16" stroke="#1C1A16" stroke-width="1.5"/>
+      <line x1="16" y1="2" x2="16" y2="30" stroke="#1C1A16" stroke-width="1.5"/>
+    </svg>
+    <div class="nav-logo-text">
+      Les Invisibles Systémiques
+      <span>Observatoire</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/articles/">Articles</a></li>
+    <li><a href="/a-propos.html">À propos</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-aecoss">
+    <a href="https://aecoss.fr" target="_blank">AECOSS.fr →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Observatoire</div>
+    <h1 class="hero-title">
+      Ce que<br>
+      personne<br>
+      ne <span class="accent">regarde</span><br>
+      <span class="outline">vraiment.</span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">Les mécanismes invisibles qui traversent l'écosystème de santé. Organisations, transformations, gouvernance, numérique — ce qui se joue en coulisses, au-delà des discours.</p>
+      <a href="#articles" class="hero-cta">Lire les analyses →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-top">
+      <svg class="hero-reticule" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="110" cy="110" r="100" stroke="#1C1A16" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <circle cx="110" cy="110" r="70" stroke="#1C1A16" stroke-width="1"/>
+        <circle cx="110" cy="110" r="40" stroke="#C17F3A" stroke-width="1.5"/>
+        <circle cx="110" cy="110" r="8" fill="#C17F3A"/>
+        <line x1="10" y1="110" x2="210" y2="110" stroke="#1C1A16" stroke-width="1"/>
+        <line x1="110" y1="10" x2="110" y2="210" stroke="#1C1A16" stroke-width="1"/>
+        <line x1="42" y1="42" x2="178" y2="178" stroke="#1C1A16" stroke-width="0.5" stroke-dasharray="2 4"/>
+        <line x1="178" y1="42" x2="42" y2="178" stroke="#1C1A16" stroke-width="0.5" stroke-dasharray="2 4"/>
+      </svg>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">22 ans</div>
+      <div class="hero-stat-label">de terrain en santé<br>pour lire ce que les rapports ne disent pas</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">GOUVERNANCE <span>//</span></span>
+    <span class="marquee-item">MÉCANIQUES HUMAINES <span>//</span></span>
+    <span class="marquee-item">TRANSFORMATION <span>//</span></span>
+    <span class="marquee-item">GEM© <span>//</span></span>
+    <span class="marquee-item">HUMAN DRIFT VIGILANCE <span>//</span></span>
+    <span class="marquee-item">ANALYSE SYSTÉMIQUE <span>//</span></span>
+    <span class="marquee-item">GOUVERNANCE <span>//</span></span>
+    <span class="marquee-item">MÉCANIQUES HUMAINES <span>//</span></span>
+    <span class="marquee-item">TRANSFORMATION <span>//</span></span>
+    <span class="marquee-item">GEM© <span>//</span></span>
+    <span class="marquee-item">HUMAN DRIFT VIGILANCE <span>//</span></span>
+    <span class="marquee-item">ANALYSE SYSTÉMIQUE <span>//</span></span>
+  </div>
+</div>
+
+<section class="articles-section" id="articles">
+  <div class="articles-header">
+    <div>
+      <p class="section-eyebrow">Publications</p>
+      <h2 class="section-title">Dernières analyses</h2>
+    </div>
+    <a href="/articles/" class="all-link">Tout voir →</a>
+  </div>
+  <div class="articles-grid">
+
+    <a href="/articles/danger-machine-soi-meme.html" class="article-card featured">
+      <div class="card-num">01</div>
+      <div class="featured-content">
+        <p class="card-tag">Systémique · Janvier 2026</p>
+        <h2 class="card-title">Quand le danger n'est plus la machine, mais soi-même</h2>
+        <p class="card-excerpt">Deux types de dérives. Dans le premier, le GPS nous fait déléguer sans nous en rendre compte. Dans le second, un décret élargit les missions sans créer les conditions pour les assumer.</p>
+        <div class="card-footer"><span>7 min de lecture</span><span class="card-arrow">→</span></div>
+      </div>
+    </a>
+
+    <a href="/articles/decrets-infirmiers-2001-2025.html" class="article-card">
+      <div class="card-num">02</div>
+      <p class="card-tag">Réforme · Janvier 2026</p>
+      <h2 class="card-title">Décrets infirmiers 2001 → 2025 : ce que le texte change... et ce qu'il ne change pas</h2>
+      <p class="card-excerpt">Une réforme modifie un texte. Une transformation modifie le travail réel.</p>
+      <div class="card-footer"><span>6 min</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a href="/articles/pourquoi-gps-ment.html" class="article-card">
+      <div class="card-num">03</div>
+      <p class="card-tag">Terrain · Décembre 2025</p>
+      <h2 class="card-title">Pourquoi le GPS ment (et pourquoi on continue quand même à l'écouter)</h2>
+      <p class="card-excerpt">Le GPS se trompe parfois. Mais le plus intéressant, c'est ce que notre manière de l'utiliser dit de notre rapport aux outils et à la décision.</p>
+      <div class="card-footer"><span>5 min</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a href="/articles/pourquoi-ce-blog-existe.html" class="article-card">
+      <div class="card-num">04</div>
+      <p class="card-tag">Introduction · Décembre 2025</p>
+      <h2 class="card-title">Pourquoi ce blog existe ?</h2>
+      <p class="card-excerpt">On parle beaucoup de numérique et d'intelligence artificielle. Partout. Tout le temps. Mais sur le terrain, une question revient sans cesse.</p>
+      <div class="card-footer"><span>4 min</span><span class="card-arrow">→</span></div>
+    </a>
+
+  </div>
+</section>
+
+<section class="themes">
+  <ul class="themes-list">
+    <li class="theme-item">
+      <span class="theme-main">Gouvernance</span>
+      <span class="theme-sub">(les décisions qui ne se voient pas)</span>
+    </li>
+    <li class="theme-item">
+      <span class="theme-main">Numérique</span>
+      <span class="theme-sub">(ce qu'on délègue sans le choisir)</span>
+    </li>
+    <li class="theme-item">
+      <span class="theme-main">Ressources humaines</span>
+      <span class="theme-sub">(Human Drift Vigilance)</span>
+    </li>
+    <li class="theme-item">
+      <span class="theme-main">Transformation</span>
+      <span class="theme-sub">(pourquoi ça échoue pour des raisons humaines)</span>
+    </li>
+  </ul>
+</section>
+
+
+<section class="newsletter">
+  <div class="newsletter-left">
+    <p class="newsletter-eyebrow">Le Fil Santé · Newsletter LinkedIn</p>
+    <h2 class="newsletter-title">Ne pas rater<br>l'essentiel.</h2>
+    <p class="newsletter-sub">Une publication quand ça mérite d'être dit. Sans bruit. Sans algorithme.</p>
+  </div>
+  <div class="newsletter-right">
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="votre@email.fr">
+      <button class="newsletter-btn">S'abonner →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-logo">Les Invisibles <span>Systémiques</span></span>
+    <p class="footer-tagline">Analyses systémiques de l'écosystème de santé. Ce qui se transforme, ce qui dérive, ce qui résiste — au-delà des discours.</p>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-title">Navigation</p>
+    <ul>
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/articles/">Articles</a></li>
+      <li><a href="/a-propos.html">À propos</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-title">Écosystème</p>
+    <ul>
+      <li><a href="https://aecoss.fr" target="_blank">AECOSS.fr</a></li>
+      <li><a href="https://aecoss.fr/methode-gem" target="_blank">Méthode GEM©</a></li>
+      <li><a href="#newsletter">Le Fil Santé</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-title">Retrouvez-nous</p>
+    <ul>
+      <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+      <li><a href="https://github.com" target="_blank">GitHub</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Geneviève Momus — Un observatoire AECOSS</p>
+    <ul class="footer-bottom-links">
+      <li><a href="/mentions-legales.html">Mentions légales</a></li>
+      <li><a href="/confidentialite.html">Politique de confidentialité</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.transform = `translate(${e.clientX - 16}px, ${e.clientY - 16}px)`;
+    });
+    document.querySelectorAll('a, button, .theme-item').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.background = 'var(--ambre)';
+        cursor.style.borderColor = 'var(--ambre)';
+        cursor.style.transform += ' scale(1.8)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.background = 'transparent';
+        cursor.style.borderColor = 'var(--noir)';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
