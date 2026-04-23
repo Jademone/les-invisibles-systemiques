@@ -1,0 +1,39 @@
+# Les Invisibles Systémiques
+
+> Observatoire analytique des organisations de santé et du monde du travail. Par Geneviève Momus, cadre de santé, fondatrice d'AECOSS.
+
+Ce site publie des analyses systémiques approfondies sur les transformations organisationnelles, le numérique en santé, la gouvernance des établissements médico-sociaux, et les mécaniques humaines invisibles qui façonnent les systèmes.
+
+## Auteure
+
+Geneviève Momus — infirmière, IDEC, cadre de santé. 18 ans d'expérience en France, Belgique, Suisse, États-Unis et Outre-mer. Fondatrice d'AECOSS, cabinet de conseil en transformation organisationnelle. Créatrice de la méthode GEM© (Gouvernance, Équilibres, Mécaniques humaines). Membre de deux groupes de travail DNS (Délégation au Numérique en Santé) : GT Cercle de soins et GT Pré-inclusion dans un outil de parcours.
+
+## Positionnement éditorial
+
+- Analyse systémique — pas de prise de parti, pas de recettes
+- Terrain avant théorie — 18 ans d'observation directe
+- Décryptage des mécanismes invisibles : glissements progressifs, dérives silencieuses, effets non intentionnels des réformes et des outils numériques
+- Cible : professionnels de santé, décideurs, agents publics, citoyens qui veulent comprendre avant d'agir
+
+## Thèmes couverts
+
+- Gouvernance des organisations de santé et médico-sociales (EHPAD, hôpitaux, CPTS, ARS)
+- Numérique en santé : IA, dossier patient, outils de coordination, e-santé
+- Réformes infirmières et paramédicales
+- Transformations organisationnelles : pourquoi elles échouent pour des raisons humaines
+- Human Drift Vigilance — concept propriétaire sur les dérives comportementales induites par les outils
+- Méthode GEM© — gouvernance, équilibres, mécaniques humaines
+
+## Articles publiés
+
+- [Pourquoi ce blog existe ?](https://www.lesinvisiblesystemiques.fr/articles/pourquoi-ce-blog-existe.html) — Introduction, décembre 2025
+- [Pourquoi le GPS ment (et pourquoi on continue à l'écouter)](https://www.lesinvisiblesystemiques.fr/articles/pourquoi-gps-ment.html) — Terrain, décembre 2025
+- [Décrets infirmiers 2001 → 2025 : ce que le texte change… et ce qu'il ne change pas](https://www.lesinvisiblesystemiques.fr/articles/decrets-infirmiers-2001-2025.html) — Réforme, janvier 2026
+- [Quand le danger n'est plus la machine, mais soi-même](https://www.lesinvisiblesystemiques.fr/articles/danger-machine-soi-meme.html) — Systémique, janvier 2026
+
+## Liens
+
+- Site principal : https://www.lesinvisiblesystemiques.fr
+- Cabinet AECOSS : https://aecoss.fr
+- Newsletter Le Fil Santé : LinkedIn
+- Contact : contact@lesinvisiblesystemiques.fr
