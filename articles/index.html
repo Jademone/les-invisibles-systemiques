@@ -195,9 +195,12 @@
 
     /* RESPONSIVE MOBILE */
     @media (max-width:768px){
-      nav.main-nav{grid-template-columns:1fr auto}
+      nav.main-nav{grid-template-columns:1fr auto;overflow:hidden}
       .nav-links,.nav-aecoss{display:none}
       .burger{display:flex}
+      .nav-logo-box{min-width:0;overflow:hidden}
+      .nav-logo-text{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+      .nav-logo-text span{display:none}
       .hero-left{padding:48px 20px;gap:32px}
       .hero-right{padding:40px 20px}
       .hero-reticule{width:min(260px,90%)}
